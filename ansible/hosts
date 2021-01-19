@@ -1,0 +1,11 @@
+[webservers]
+ansible_1
+ansible_2
+ansible_3
+ansible_4
+ansible_5
+ansible_6
+ansible_7
+ansible_8
+ansible_9
+ansible_10
