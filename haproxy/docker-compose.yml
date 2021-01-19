@@ -1,0 +1,110 @@
+version: "3"
+
+services:
+        website1:
+                container_name: website1
+                image: my-apache
+                expose:
+                        - "8080"
+                healthcheck:
+                        test: ["CMD", "curl", "-f", "http://localhost:8080"]
+                        interval: 1m30s
+                        timeout: 10s
+                        retries: 3
+                        start_period: 40s
+                deploy:
+                        #replicas: 4
+                        resources:
+                                limits:
+                                        cpus: '1.00'
+                                        memory: 150M
+                                reservations:
+                                        memory: 100M
+                restart: unless-stopped
+
+        website2:
+                container_name: website2
+                image: my-apache
+                expose:
+                        - "8080"
+                healthcheck:
+                        test: ["CMD", "curl", "-f", "http://localhost:8080"]
+                        interval: 1m30s
+                        timeout: 10s
+                        retries: 3
+                        start_period: 40s
+                deploy:
+                        resources:
+                                limits:
+                                        cpus: '1.00'
+                                        memory: 150M
+                                reservations:
+                                        memory: 100M
+                restart: unless-stopped
+
+        website3:
+                container_name: website3
+                image: my-apache
+                expose:
+                        - "8080"
+                healthcheck:
+                        test: ["CMD", "curl", "-f", "http://localhost:8080"]
+                        interval: 1m30s
+                        timeout: 10s
+                        retries: 3
+                        start_period: 40s
+                deploy:
+                        resources:
+                                limits:
+                                        cpus: '1.00'
+                                        memory: 150M
+                                reservations:
+                                        memory: 100M
+                restart: unless-stopped
+
+        website4:
+                container_name: website4
+                image: my-apache
+                expose:
+                        - "8080"
+                healthcheck:
+                        test: ["CMD", "curl", "-f", "http://localhost:8080"]
+                        interval: 1m30s
+                        timeout: 10s
+                        retries: 3
+                        start_period: 40s
+                deploy:
+                        resources:
+                                limits:
+                                        cpus: '1.00'
+                                        memory: 150M
+                                reservations:
+                                        memory: 100M
+                restart: unless-stopped
+        haproxy:
+                container_name: haproxy
+                image: my-haproxy
+                expose:
+                        - "8080"
+                depends_on:
+                        - website1
+                        - website2
+                        - website3
+                        - website4
+                ports:
+                        - "80:8080"
+                healthcheck:
+                        test: ["CMD", "curl", "-f", "http://localhost:8080"]
+                        interval: 1m30s
+                        timeout: 10s
+                        retries: 3
+                        start_period: 40s
+                deploy:
+                        resources:
+                                limits:
+                                        cpus: '1.00'
+                                        memory: 250M
+                                reservations:
+                                        memory: 150M
+                entrypoint: ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
+                restart: unless-stopped

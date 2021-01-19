@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+        server:
+                image: ubuntu-ansible:latest
+                deploy:
+                        resources:
+                                limits:
+                                        memory: 300M
+                        replicas: 10
+                expose:
+                        - "22"
+                command: tail -f /dev/null
+                restart: unless-stopped
+        ansible:
+                container_name: ansible
+                image: ansible-practise:latest
+                command: tail -f /dev/null
+                restart: unless-stopped
