@@ -1,10 +1,10 @@
 #!/bin/bash
 
 rm ansible/hosts
-echo "[webservers]" >> ansible/hosts
+echo "[servers]" >> ansible/hosts
 for num in {1..10}
 do
-	echo "ansible_$num" >> ansible/hosts
+	echo "ansible_server_$num" >> ansible/hosts
 done
 
 #building files

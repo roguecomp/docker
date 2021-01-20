@@ -18,7 +18,7 @@ echo "---------------------------------------------------------"
 
 for num in {1..10}
 do
-	echo "website$num: "
+	echo "server number $num: "
 	docker exec -it ansible_server_$num service ssh start
 	echo ""
 done
