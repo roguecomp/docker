@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt update 
-RUN apt install -y python3 openssh-server
-RUN echo 'root:root' | chpasswd
+RUN apt update && \ 
+apt install -y python3 openssh-server && \
+echo 'root:root' | chpasswd
 
 EXPOSE 22
 
