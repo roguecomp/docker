@@ -1,0 +1,14 @@
+#!/bin/sh
+
+for folder in $(ls)
+do
+	if [ ! -d $folder ]
+	then
+		continue
+	fi
+
+	echo "-----------------Building $folder image-----------------"
+	cd $folder; ./build; cd ..
+done
+
+echo "built all images"
