@@ -2,9 +2,11 @@ version: "3"
 services:
   fetch:
     build: ./fetch
-    image: fetch:latest
+    image: amancevice/pandas:alpine
     container_name: fetch
-    networks: fetch
+    networks: 
+      - fetch
+    restart: unless-stopped
   flask:
     build: ./flask
     image: flask:latest

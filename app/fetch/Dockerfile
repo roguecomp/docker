@@ -1,3 +1,3 @@
-FROM pypy:latest 
-RUN pip3 install pandas
-ENTRYPOINT [ "pypy", "fetch.py" ]
+FROM amancevice/pandas:alpine
+COPY fetch.py /var/lib/pandas/fetch.py
+ENTRYPOINT [ "python3", "fetch.py" ]
