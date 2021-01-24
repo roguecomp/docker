@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   fetch:
     build: ./fetch
@@ -7,6 +8,7 @@ services:
     networks: 
       - fetch
     restart: unless-stopped
+
   flask:
     build: ./flask
     image: flask:latest
@@ -20,6 +22,7 @@ services:
     volumes: 
       - /home/roguecomp/github/docker/app/flask/flask.py:/flask.py
     restart: unless-stopped
+
   redis:
     image: redis:alpine
     container_name: redis
@@ -29,6 +32,7 @@ services:
       - flask
       - fetch
     restart: unless-stopped
+    
 networks: 
   flask:
     driver: bridge
