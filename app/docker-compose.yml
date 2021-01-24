@@ -1,5 +1,10 @@
 version: "3"
 services:
+  fetch:
+    build: ./fetch
+    image: fetch:latest
+    container_name: fetch
+    networks: fetch
   flask:
     build: ./flask
     image: flask:latest
@@ -20,11 +25,16 @@ services:
     - "6379"
     networks: 
       - flask
+      - fetch
     restart: unless-stopped
 networks: 
   flask:
     driver: bridge
     enable_ipv6: false
+  fetch:
+    driver: bridge
+    enable_ipv6: false
+
 
 
 
