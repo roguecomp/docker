@@ -1,6 +1,6 @@
 FROM pypy:3.7-slim
 
-RUN pip3 install flask
+RUN pip3 install flask redis
 COPY flask.py /flask.py
 
 ENTRYPOINT ["pypy", "flask.py"]
