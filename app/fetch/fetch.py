@@ -1,1 +1,1 @@
-import yfinance
+import yahoo_fin

@@ -1,5 +1,5 @@
-FROM pypy:3.7-slim 
+FROM amancevice/pandas:alpine
 
-RUN pip3 install 
+RUN pip3 install requests yahoo_fin
 COPY fetch.py /var/lib/pandas/fetch.py
-ENTRYPOINT [ "pypy", "fetch.py" ]
+ENTRYPOINT [ "python3", "fetch.py" ]
