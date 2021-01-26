@@ -5,6 +5,8 @@ services:
     build: ./fetch
     image: fetch:latest
     container_name: fetch
+    depends_on: 
+      - redis
     networks: 
       - fetch
     restart: unless-stopped
@@ -19,20 +21,19 @@ services:
       - "80:80"
     networks: 
       - flask
-    volumes: 
-      - /home/roguecomp/github/docker/app/flask/flask.py:/flask.py
     restart: unless-stopped
 
   redis:
     image: redis:alpine
     container_name: redis
+    hostname: redis
     expose: 
     - "6379"
     networks: 
       - flask
       - fetch
     restart: unless-stopped
-    
+
 networks: 
   flask:
     driver: bridge

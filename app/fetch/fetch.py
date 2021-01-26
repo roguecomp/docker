@@ -1,10 +1,14 @@
 from yahoo_fin import stock_info
+import redis
+import time
 
-print(stock_info.get_live_price('AAPL'))
+print("done.............................")
 
-data = {}
-data['AAPL'] = stock_info.get_data('AAPL', start_date='08-01-2020',  end_date='08-22-2020')
-print(data['AAPL'].head())
-print(data["AAPL"])
+r = redis.Redis(host='redis', port=6379, db=0)
 
-print("done")
+while 1:
+    time.sleep(1)
+    stock_price = stock_info.get_live_price('AAPL')
+    curr_time = time.ctime()[11:-5] # storing current time in 24 hr format
+    print("Stock Price: {}".format(stock_price))
+    r.set(curr_time, stock_price)
