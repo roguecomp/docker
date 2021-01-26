@@ -1,14 +1,30 @@
-from yahoo_fin import stock_info
-import redis
+from bs4 import BeautifulSoup as bs
+import requests
 import time
 
-print("done.............................")
+page_url = "https://finance.yahoo.com/quote/TSLA/news/"
+page = requests.get(page_url)
+soup = bs(page.content, 'html.parser')
 
-r = redis.Redis(host='redis', port=6379, db=0)
+u = soup.find_all('a')
+url = []
+for i in u:
+    for word in str(i).split(' '):
+        if(word[:7]=='href="/'):
+            end = word.find('l"')
+            url.append(word[7:end+1])
 
-while 1:
-    time.sleep(1)
-    stock_price = stock_info.get_live_price('AAPL')
-    curr_time = time.ctime()[11:-5] # storing current time in 24 hr format
-    print("Stock Price: {}".format(stock_price))
-    r.set(curr_time, stock_price)
+urls = []
+for i in url:
+    urls.append(page_url + i)
+
+urls = list(set(urls))
+
+urls = urls[-2:]
+
+url = ""
+for url in urls:
+    page = requests.get(url)
+    soup = bs(page.content, 'html.parser')
+    a = soup.find_all('p')
+    print(a[2])
