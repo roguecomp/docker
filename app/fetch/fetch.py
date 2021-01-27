@@ -57,6 +57,15 @@ def update_stock(stock="TSLA"):
 
     from datetime import datetime, time 
 
+    data = {}
+
+    data[stock] = stock_info.get_data(stock, start_date='01/01/2019')
+    #print(data[stock]['open']['2021-01-21'])
+
+    for date, price in data[stock]['open'].items():
+        date = str(date)[:-9]
+        r.hset(stock+'_all', str(date), str(price))
+
     while 1:
         if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
             """
@@ -68,19 +77,18 @@ def update_stock(stock="TSLA"):
             tick += 1
             sleep(5)
             stock_price = stock_info.get_live_price(stock)
+            r.hset(stock, 'price', stock_price)
+            r.hset(stock, 'time', datetime.now())
+
             price.append(stock_price)
             
-            if(tick % 720 == 0):
-                # Add stock prices to redis database every hour
-                # the market is open
-                r.set(stock, price)
         else:
             # resetting variables
             price = []
             tick = 0
 
             print("Market Closed")
-            r.set(stock, 'closed')
+            
             sleep(5) 
 
 update_stock()
