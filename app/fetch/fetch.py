@@ -62,7 +62,7 @@ def update_stock(stock="TSLA"):
             """
                 US Stock Market is OPEN!!!
                 time in container amancevice/pandas:alpine is in UTC
-                Market is open 9:30am - 4:00pm et == 2:30pm - 9:00pm
+                Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
             """
             tick += 1
             sleep(5)
