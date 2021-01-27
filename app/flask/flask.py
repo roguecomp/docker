@@ -1,5 +1,6 @@
 import redis
 from time import sleep
+from datetime import datetime, time
 
 stock = 'TSLA'
 
@@ -23,9 +24,30 @@ def get_stock_history(stock='TSLA'):
 
 data = get_stock_history(stock)
 
+def in_between(now, start, end):
+    """Finding out if given time is between two ranges
+
+    Args:
+        now (time): given time
+        start (time): start time (lower bound)
+        end (time): end time (upper time)
+
+    Returns:
+        bool: Checks if time is between upper and lower bounds
+    """
+    if start <= end:
+        return start <= now < end
+    else: # over midnight e.g., 23:30-04:15
+        return start <= now or now < end
+
 while 1:
-    price = float(r.hget(stock, 'price').decode('UTF-8'))
-    time = r.hget(stock, 'time').decode('UTF-8')
-    
-    sleep(1)
+    if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
+        price = r.get(stock)
+        price = float(str(price))
+        #price = float(price.decode('UTF-8'))
+        time = r.hget(stock, 'time').decode('UTF-8')
+        sleep(1)
+    else:
+        # Market is closed
+        sleep(5)
 

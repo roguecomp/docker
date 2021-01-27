@@ -77,7 +77,8 @@ def update_stock(stock="TSLA"):
             tick += 1
             sleep(1)
             stock_price = stock_info.get_live_price(stock)
-            r.hset(stock, 'price', str(stock_price))
+            r.hset(stock, 'price', stock_price)
+            #r.set(stock, stock_price)
             r.hset(stock, 'time', str(datetime.now()))
 
             price.append(stock_price)
