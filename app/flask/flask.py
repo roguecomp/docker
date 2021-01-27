@@ -1,6 +1,6 @@
-import flask
-import time
-while 1:
-    time.sleep(1)
-    print("hi")
-    
+import redis
+from time import sleep
+
+r = redis.Redis(host='redis', port=6379, db=0)
+print(r.get('TSLA'))
+sleep(2)

@@ -17,6 +17,7 @@ services:
     container_name: flask
     depends_on: 
       - redis
+      - fetch
     ports:
       - "80:80"
     networks: 
