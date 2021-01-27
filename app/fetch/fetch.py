@@ -75,10 +75,10 @@ def update_stock(stock="TSLA"):
                 -> Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
             """
             tick += 1
-            sleep(5)
+            sleep(1)
             stock_price = stock_info.get_live_price(stock)
-            r.hset(stock, 'price', stock_price)
-            r.hset(stock, 'time', datetime.now())
+            r.hset(stock, 'price', str(stock_price))
+            r.hset(stock, 'time', str(datetime.now()))
 
             price.append(stock_price)
             
