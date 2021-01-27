@@ -61,8 +61,9 @@ def update_stock(stock="TSLA"):
         if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
             """
                 US Stock Market is OPEN!!!
-                time in container amancevice/pandas:alpine is in UTC
-                Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
+                
+                -> time in container amancevice/pandas:alpine is in UTC
+                -> Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
             """
             tick += 1
             sleep(5)
