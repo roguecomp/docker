@@ -24,9 +24,8 @@ def get_stock_history(stock='TSLA'):
 data = get_stock_history(stock)
 
 while 1:
-    price = r.hget(stock, 'price')
-    time = r.hget(stock, 'time')
-    
+    price = float(r.hget(stock, 'price').decode('UTF-8'))
+    time = r.hget(stock, 'time').decode('UTF-8')
     
     sleep(1)
 
