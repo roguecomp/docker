@@ -79,10 +79,8 @@ def update_stock(stock="TSLA"):
             stock_price = stock_info.get_live_price(stock)
             r.hset(stock, 'price', stock_price)
             #r.set(stock, stock_price)
-            r.hset(stock, 'time', str(datetime.now()))
-
-            price.append(stock_price)
-            
+            time = str(datetime.now())[11:-7]
+            r.hset(stock, 'time', time)
         else:
             # resetting variables
             price = []

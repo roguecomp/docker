@@ -40,14 +40,22 @@ def in_between(now, start, end):
     else: # over midnight e.g., 23:30-04:15
         return start <= now or now < end
 
+prices = []
+times = []
 while 1:
-    if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
-        price = r.get(stock)
-        price = float(str(price))
-        #price = float(price.decode('UTF-8'))
+    if bool(in_between(datetime.now().time(), time(14, 30), time(21, 00))):
+        price = r.hget(stock, 'price')
+        price = float(price)
+        print("Current Price: {}".format(price))
+        prices.append(price)
         time = r.hget(stock, 'time').decode('UTF-8')
+        times.append(time)
+
         sleep(1)
     else:
         # Market is closed
+        print("closed")
+        prices = []
+        times = []
         sleep(5)
 
