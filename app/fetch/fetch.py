@@ -24,19 +24,19 @@ def in_between(now, start, end):
 
 def update_stock(stock="TSLA"):
     
-    price = []
     tick = 0
 
     from datetime import datetime, time 
 
-    data = {}
+    # GETTING HISTORICAL DATA
+    # data = {}
 
-    data[stock] = stock_info.get_data(stock, start_date='01/01/2019')
-    #print(data[stock]['open']['2021-01-21'])
+    # data[stock] = stock_info.get_data(stock, start_date='01/01/2019')
+    # #print(data[stock]['open']['2021-01-21'])
 
-    for date, price in data[stock]['open'].items():
-        date = str(date)[:-9]
-        r.hset(stock+'_all', str(date), str(price))
+    # for date, price in data[stock]['open'].items():
+    #     date = str(date)[:-9]
+    #     r.hset(stock+'_all', str(date), str(price))
 
     while 1:
         # if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
@@ -56,7 +56,6 @@ def update_stock(stock="TSLA"):
             # r.hset(stock, 'time', time)
         else:
             # resetting variables
-            price = []
             tick = 0
 
             print("Market Closed")
