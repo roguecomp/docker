@@ -19,7 +19,7 @@ services:
       - redis
       - fetch
     ports:
-      - "80:80"
+      - "80:5000"
     networks: 
       - flask
     restart: unless-stopped
