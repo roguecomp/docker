@@ -3,6 +3,7 @@ import requests
 import redis
 from time import sleep
 from flask import Flask
+from datetime import datetime, time
 
 r = redis.Redis(host='redis', port=6379, db=0)
 app = Flask(__name__)
@@ -20,54 +21,8 @@ def in_between(now, start, end):
     """
     if start <= end:
         return start <= now < end
-    else: # over midnight e.g., 23:30-04:15
+    else: 
         return start <= now or now < end
-
-def update_stock(stock="TSLA"):
-    
-    tick = 0
-
-    from datetime import datetime, time 
-
-    # GETTING HISTORICAL DATA
-    # data = {}
-
-    # data[stock] = stock_info.get_data(stock, start_date='01/01/2019')
-    # #print(data[stock]['open']['2021-01-21'])
-
-    # for date, price in data[stock]['open'].items():
-    #     date = str(date)[:-9]
-    #     r.hset(stock+'_all', str(date), str(price))
-
-    prices = {}
-    prices.popitem()
-    while 1:
-        if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
-        # if in_between(datetime.now().time(), time(00, 00), time(23, 59)):
-            """
-                US Stock Market is OPEN!!!
-
-                -> time in container amancevice/pandas:alpine is in UTC
-                -> Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
-            """
-            tick += 1
-            stock_price = stock_info.get_live_price(stock)
-            prices[tick] = stock_price
-
-            r.hmset("PRICE", prices)
-            r.hset(stock, 'price', stock_price)
-            #r.set(stock, stock_price)
-            # time = str(datetime.now())[11:-7]
-            # r.hset(stock, 'time', time)
-        else:
-            # resetting variables
-            tick = 0
-
-            print("Market Closed")
-            
-            sleep(5) 
-
-update_stock()
 
 def get_stock_history(stock='TSLA'):
     """getting stocks historical data 
@@ -76,23 +31,40 @@ def get_stock_history(stock='TSLA'):
         stock (str, optional): Name of the stock. Defaults to 'TSLA'.
     """
 
-    history = {}
-    history[stock] = stock_info.get_data(stock, start_date='01/01/2019')
+    history = stock_info.get_data(stock, start_date='01/01/2019')
 
     return history 
 
 stock = 'TSLA'
+history = get_stock_history(stock) 
+# r.hmset('history', history)
 
 @app.route('/')
 def welcome_page():
-    return 'WELCOME!!!'
+    """Welcome Page
 
+    Returns:
+        website_payload: returns html file which can be viewed in browser
+    """
+    return 'WELCOME!!!'
 
 @app.route('/graph')
 def update():
 
-    history = get_stock_history(stock) 
-    return history
+    # if in_between(datetime.now().time(), time(14, 30), time(21, 00)):
+    if in_between(datetime.now().time(), time(0, 00), time(23, 59)):
+        """
+        # US Stock Market is OPEN!!!
+
+        -> time in container amancevice/pandas:alpine is in UTC
+        -> Market is open 9:30am - 4:00pm ET == 2:30pm - 9:00pm UTC
+        """
+
+        stock_price = stock_info.get_live_price(stock)
+        return str(stock_price)
+    else:
+        # Market is Closed
+        return 'Market Closed!'
 
 if __name__ == '__main__':
     app.run(debug=True , host='0.0.0.0', port=5000)
