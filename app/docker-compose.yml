@@ -11,19 +11,6 @@ services:
       - fetch
     restart: unless-stopped
 
-  flask:
-    build: ./flask
-    image: flask:latest
-    container_name: flask
-    depends_on: 
-      - redis
-      - fetch
-    ports:
-      - "80:5000"
-    networks: 
-      - flask
-    restart: unless-stopped
-
   redis:
     image: redis:alpine
     container_name: redis
@@ -31,14 +18,10 @@ services:
     expose: 
     - "6379"
     networks: 
-      - flask
       - fetch
     restart: unless-stopped
 
 networks: 
-  flask:
-    driver: bridge
-    enable_ipv6: false
   fetch:
     driver: bridge
     enable_ipv6: false

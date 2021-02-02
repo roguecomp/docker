@@ -1,5 +1,5 @@
 FROM amancevice/pandas:alpine
 
-RUN pip3 install requests yahoo_fin redis beautifulsoup4
+RUN pip3 install requests yahoo_fin redis beautifulsoup4 flask
 COPY fetch.py /var/lib/pandas/fetch.py
 ENTRYPOINT [ "python3", "/var/lib/pandas/fetch.py" ]
