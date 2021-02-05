@@ -3,6 +3,7 @@ import requests
 import redis
 from time import sleep
 from flask import Flask
+from flask import render_template
 from datetime import datetime, time
 
 r = redis.Redis(host='redis', port=6379, db=0)
@@ -31,13 +32,15 @@ def get_stock_history(stock='TSLA'):
         stock (str, optional): Name of the stock. Defaults to 'TSLA'.
     """
 
-    history = stock_info.get_data(stock, start_date='01/01/2019')
+    history = stock_info.get_data(stock)#, start_date='01/01/2019')
 
     return history 
 
 stock = 'TSLA'
 history = get_stock_history(stock) 
-# r.hmset('history', history)
+
+labels = [str(date)[:-9] for date in dict(history.iloc[:,0]).keys()]
+values = list(history['open'])
 
 @app.route('/')
 def welcome_page():
@@ -61,7 +64,8 @@ def update():
         """
 
         stock_price = stock_info.get_live_price(stock)
-        return str(stock_price)
+        
+        return render_template('chart.html', values=values, labels=labels)
     else:
         # Market is Closed
         return 'Market Closed!'

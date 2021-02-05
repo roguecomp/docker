@@ -6,7 +6,7 @@ services:
     image: fetch:latest
     container_name: fetch
     ports: 
-      - 80:5000
+      - 5000:5000
     depends_on: 
       - redis
     networks: 
