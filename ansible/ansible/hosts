@@ -9,3 +9,8 @@ ansible_server_7
 ansible_server_8
 ansible_server_9
 ansible_server_10
+
+[servers:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=root
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'

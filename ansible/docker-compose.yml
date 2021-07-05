@@ -6,7 +6,7 @@ services:
                 deploy:
                         resources:
                                 limits:
-                                        memory: 300M
+                                        memory: 150M
                         replicas: 10
                 expose:
                         - "22"
