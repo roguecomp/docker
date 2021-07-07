@@ -1,12 +1,10 @@
-FROM centos:latest
+FROM ubuntu:latest
 
-RUN yum install epel-release -y && \
-yum update -y && \
-yum install ansible -y && \
-yum install -y python3
+RUN apt update && \
+apt install -y ansible python3
 COPY hosts /etc/ansible/hosts
 COPY startup.sh /startup.sh
 RUN chmod +x startup.sh && \ 
-dnf install -y openssh-server openssh-clients
+apt install -y openssh-server sshpass
 EXPOSE 22
 

@@ -2,18 +2,29 @@ version: "3"
 
 services:
         server:
+                build:
+                        ./slave
                 image: ubuntu-ansible:latest
                 deploy:
                         resources:
                                 limits:
+                                        cpus: '0.50'
                                         memory: 150M
+                                reservations:
+                                        memory: 100M
                         replicas: 10
                 expose:
                         - "22"
+                volumes:
+                        - ./src:/home/src
                 command: tail -f /dev/null
                 restart: unless-stopped
-        ansible:
+        master:
+                build:
+                        ./ansible
                 container_name: ansible
                 image: ansible-practise:latest
+                volumes:
+                        - ./src:/home/src
                 command: tail -f /dev/null
                 restart: unless-stopped
