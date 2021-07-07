@@ -6,12 +6,6 @@ services:
                         ./slave
                 image: ubuntu-ansible:latest
                 deploy:
-                        resources:
-                                limits:
-                                        cpus: '0.50'
-                                        memory: 150M
-                                reservations:
-                                        memory: 100M
                         replicas: 10
                 expose:
                         - "22"
