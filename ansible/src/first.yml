@@ -1,0 +1,16 @@
+---
+- hosts: all
+  name: Ansible install
+
+  tasks:
+    - name: Check install
+      apt:
+        name:
+          - apache2
+        state: present
+      
+    - name: Validating httpd daemon
+      ansible.builtin.service:
+        name:
+          - httpd
+        state: started
