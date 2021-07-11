@@ -23,13 +23,9 @@ fireFoxOptions.set_headless()
 
 driver = webdriver.Firefox(firefox_options=fireFoxOptions)
 
-ids = {'me' : '100006408005900',
-       'samalb' : '3767921846664013',
-       'dhairya': '100022320870897',
-       'dad': '1318316366',
-       'kim': '100006857088499'}
+messenger_ids = json.load(open('.messenger_ids.json', 'r'))
 
-url = 'https://www.facebook.com/messages/t/' + ids['dhairya']
+url = 'https://www.facebook.com/messages/t/' + messenger_ids['mystery_man']
 
 driver.get(url)
 
