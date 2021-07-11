@@ -3,7 +3,7 @@ version: "3"
 services:
         server:
                 build:
-                        ./slave
+                        ./server-node
                 image: ubuntu-dds-node:latest
                 deploy:
                         resources:
